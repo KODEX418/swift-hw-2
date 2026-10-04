@@ -7,10 +7,14 @@
 
 import SwiftUI
 import SwiftData
-
-var DEVMODE = false
+enum StatusFilterMode:String, CaseIterable{
+    
+    case Bought="Купленное", All="Всё", NeedToBuy="Не купленное"
+}
+var DEVMODE = true
 struct ContentView: View {
     @State private var items:[ShoppingItem] = DEVMODE ? ShoppingItem.samples: []
+    @State private var statusFilterMode:StatusFilterMode = .All
     @State private var searchText = ""
     @State private var showingAddItem = false
     @State var availableCategories:[Category] = [
@@ -20,11 +24,22 @@ struct ContentView: View {
     ]
     
     private var visibleItems:[ShoppingItem] {
-        guard !searchText.isEmpty else{return items}
+        guard !searchText.isEmpty || statusFilterMode != .All else{return items}
+        
         return items.filter({
-            $0.category.name.localizedCaseInsensitiveContains(searchText)
-            ||
-            $0.name.localizedCaseInsensitiveContains(searchText)
+            (
+             statusFilterMode == .All
+             ||
+             $0.isPurchased == (statusFilterMode == .Bought)
+            )
+            &&
+            (
+             searchText.isEmpty
+             ||
+             $0.category.name.localizedCaseInsensitiveContains(searchText)
+             ||
+             $0.name.localizedCaseInsensitiveContains(searchText))
+            
         })
     }
     var body: some View {
@@ -46,6 +61,13 @@ struct ContentView: View {
                     Button("Добавить", systemImage: "plus"){
                         showingAddItem = true
                     }
+                }
+                ToolbarItem(placement:.bottomBar){
+                    Picker("", selection: $statusFilterMode){
+                        ForEach(StatusFilterMode.allCases, id: \.self){mode in
+                            Text(mode.rawValue).tag(mode)
+                        }
+                    }.pickerStyle(.segmented)
                 }
             }
             .navigationTitle("Покупки")

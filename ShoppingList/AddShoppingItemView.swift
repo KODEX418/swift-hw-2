@@ -39,9 +39,11 @@ struct AddShoppingItemView:View{
                 }
                 ToolbarItem(placement: .confirmationAction){
                     Button("Сохранить"){
-                        onSave(ShoppingItem(name: name.trimmingCharacters(in: .whitespaces), category: currCategory, quantity: quantity))
+                        onSave(ShoppingItem(name: name.trimmingCharacters(in: .whitespaces),
+                                            category: currCategory, quantity: quantity))
                         dismiss()
-                    }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
             .navigationTitle("Новая покупка")

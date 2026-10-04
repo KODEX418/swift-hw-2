@@ -5,6 +5,7 @@
 //  Created by Kostya on 30.09.2026.
 //
 import Foundation
+
 struct ShoppingItem:Identifiable, Hashable{
     let id:UUID
     var name:String
