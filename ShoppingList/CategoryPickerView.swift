@@ -67,27 +67,29 @@ struct CategoryPickerView: View {
                         TextField("Название категории", text: $newCategoryName)
                         ColorPicker("Цвет категории", selection: $newCategoryColor)
                     }
-                .navigationTitle("Создать категорию")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar{
-                    ToolbarItem(placement: .cancellationAction){
-                        Button("Отмена", role: .cancel){
-                            guard let tempCategory else {return}
-                            currentCategory = tempCategory
-                            showingAddSheet = false
+                    .navigationTitle("Создать категорию")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar{
+                        ToolbarItem(placement: .cancellationAction){
+                            Button("Отмена", role: .cancel){
+                                guard let tempCategory else {return}
+                                currentCategory = tempCategory
+                                showingAddSheet = false
+                            }
                         }
-                    }
-                    ToolbarItem(placement:.confirmationAction){
-                        Button("Добавить"){
-                            let newCategory = Category(name: newCategoryName, color: newCategoryColor)
-                            categories.append(newCategory)
-                            currentCategory = newCategory
-                            showingAddSheet = false
+                        ToolbarItem(placement:.confirmationAction){
+                            Button("Добавить"){
+                                let newCategory = Category(name: newCategoryName, color: newCategoryColor)
+                                categories.append(newCategory)
+                                currentCategory = newCategory
+                                showingAddSheet = false
+                            }
+                            .disabled(newCategoryName.trimmingCharacters(in: .whitespaces).isEmpty)
                         }
-                        .disabled(newCategoryName.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
-            }
+                .presentationDetents([.fraction(0.85)])
+                .ignoresSafeArea(.keyboard)
         }
             
 //        .confirmationDialog("Удалить категорию", isPresented: $showingRemoveSheet){

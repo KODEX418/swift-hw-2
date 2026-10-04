@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-var DEVMODE = true
+var DEVMODE = false
 struct ContentView: View {
     @State private var items:[ShoppingItem] = DEVMODE ? ShoppingItem.samples: []
     @State private var searchText = ""
@@ -59,6 +59,8 @@ struct ContentView: View {
                 AddShoppingItemView(categories:$availableCategories){
                     newItem in items.append(newItem)
                 }
+                .presentationDetents([.fraction(0.85)])
+                .ignoresSafeArea(.keyboard)
             }
         }
     }

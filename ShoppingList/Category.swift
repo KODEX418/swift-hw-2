@@ -18,5 +18,5 @@ struct Category:Identifiable, Hashable{
 }
 
 extension Category{
-    static let Null = Category(name: "без категории", color: .gray)
+    static let Null = Category(name: "Без категории", color: .gray)
 }
