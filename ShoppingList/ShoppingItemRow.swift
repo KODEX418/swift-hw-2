@@ -17,8 +17,11 @@ struct ShoppingItemRow: View {
                 Text(item.name)
                     .font(Font.headline)
                     .bold()
-                Text("\(item.category) · \(item.quantity) шт")
-                    .font(.caption).foregroundStyle(.secondary)
+                let subtext = item.category != Category.Null ? "\(item.category.name) · \(item.quantity) шт" : "\(item.quantity) шт"
+                Text(subtext)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .foregroundStyle(item.category.color)
             }
         }
     }

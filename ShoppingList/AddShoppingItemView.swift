@@ -8,11 +8,11 @@ import SwiftUI
 
 struct AddShoppingItemView:View{
     @Environment(\.dismiss) private var dismiss
+    @Binding var categories:[Category]
     let onSave: (ShoppingItem) -> Void
     @State private var quantity = 1
     @State private var name = ""
-    @State private var category = ""
-    
+    @State var currCategory:Category = Category.Null
     var body: some View{
         NavigationStack{
             Form {
@@ -24,7 +24,7 @@ struct AddShoppingItemView:View{
                 HStack{
                     Text("Категория:").font(.headline)
                     Spacer()
-                    TextField("", text: $category)
+                    CategoryPickerView(categories: $categories, currentCategory: $currCategory)
                 }
                 Stepper(value: $quantity, in: 1...99){
                     HStack{
@@ -39,7 +39,7 @@ struct AddShoppingItemView:View{
                 }
                 ToolbarItem(placement: .confirmationAction){
                     Button("Сохранить"){
-                        onSave(ShoppingItem(name: name.trimmingCharacters(in: .whitespaces), category: category, quantity: quantity))
+                        onSave(ShoppingItem(name: name.trimmingCharacters(in: .whitespaces), category: currCategory, quantity: quantity))
                         dismiss()
                     }.disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
@@ -51,6 +51,6 @@ struct AddShoppingItemView:View{
     }
 }
 
-#Preview {
-    AddShoppingItemView(onSave: {s1 in })
-}
+//#Preview {
+//    AddShoppingItemView(onSave: {s1 in })
+//}

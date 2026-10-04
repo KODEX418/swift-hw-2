@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ShoppingItemDetailView: View {
+    @Binding var categories:[Category]
     @Binding var item: ShoppingItem
+    
     var body: some View{
         Form {
             HStack{
@@ -18,8 +20,8 @@ struct ShoppingItemDetailView: View {
             }
             HStack{
                 Text("Категория:").font(.headline)
+                CategoryPickerView(categories: $categories, currentCategory: $item.category)
                 Spacer()
-                TextField("", text: $item.category)
             }
             Stepper(value: $item.quantity, in: 1...99){
                 HStack{

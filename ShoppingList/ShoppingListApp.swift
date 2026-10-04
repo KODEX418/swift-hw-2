@@ -10,7 +10,6 @@ import SwiftData
 
 @main
 struct ShoppingListApp: App {
-    
      static let integerFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
