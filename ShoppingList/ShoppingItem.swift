@@ -6,15 +6,14 @@
 //
 import Foundation
 
-struct ShoppingItem:Identifiable, Hashable{
-    let id:UUID
+struct ShoppingItem:Identifiable, Hashable, Codable{
+    var id = UUID()
     var name:String
     var category:Category
     var quantity:Int
     var isPurchased:Bool
     
-    init(id: UUID=UUID(), name: String, category: Category = Category.Null, quantity: Int=1, isPurchased: Bool=false) {
-        self.id = id
+    init(name: String, category: Category = Category.Null, quantity: Int=1, isPurchased: Bool=false) {
         self.name = name
         self.category = category
         self.quantity = quantity

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+
+
 enum StatusFilterMode:String, CaseIterable{
     
     case Bought="Купленное", All="Всё", NeedToBuy="Не купленное"
