@@ -23,7 +23,7 @@ struct ShoppingItem:Identifiable, Hashable, Codable{
 }
 extension ShoppingItem{
     static let samples = [
-        ShoppingItem(name: "Хлеб",isPurchased: true),
+        ShoppingItem(name: "Хлеб", isPurchased: true),
         ShoppingItem(name: "Молоко"),
         ShoppingItem(name: "Ручки", quantity: 5),
         ShoppingItem(name: "Батарейки", quantity: 3)

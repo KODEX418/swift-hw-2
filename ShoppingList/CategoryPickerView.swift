@@ -11,20 +11,11 @@ struct CategoryPickerView: View {
     @Binding var categories:[Category]
     @Binding var currentCategory:Category
     @State private var tempCategory:Category?
-    @State private var deleteCategory:Category?
     @State var newCategoryName:String = ""
     @State var newCategoryColor:Color = .gray
     @State private var showingAddSheet = false
-    @State private var showingRemoveSheet = false
-    
-//    private var deletableCategories: [Category]{
-//        return categories.filter{category in
-//            return !allItems.contains(where: {$0.category.id == category.id})
-//        }
-//    }
     
     private static let addNewTag = Category(name: "Добавить категорию", color: .gray)
-//    private static let deleteTag = Category(name: "Удалить категорию", color: .gray)
     
     var body: some View {
             Picker("Категория", selection: $currentCategory){
@@ -41,9 +32,6 @@ struct CategoryPickerView: View {
                 Text(CategoryPickerView.addNewTag.name)
                     .tag(CategoryPickerView.addNewTag)
                     .foregroundStyle(CategoryPickerView.addNewTag.color)
-//                Text(CategoryPickerView.deleteTag.name)
-//                    .tag(CategoryPickerView.deleteTag)
-//                    .foregroundStyle(.red)
             }
             .tint(currentCategory.color)
             .pickerStyle(.menu)
@@ -52,10 +40,6 @@ struct CategoryPickerView: View {
                 case CategoryPickerView.addNewTag:
                     tempCategory = oldValue
                     showingAddSheet = true
-//                case CategoryPickerView.deleteTag:
-//                    tempCategory = oldValue
-//                    deleteCategory = oldValue
-//                    showingRemoveSheet = true
                 default:
                     tempCategory = oldValue
                 }

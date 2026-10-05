@@ -35,6 +35,3 @@ struct ShoppingItemDetailView: View {
         }
     }
 }
-//#Preview {
-//    ShoppingItemDetailView(item: ShoppingItem.samples[0])
-//}

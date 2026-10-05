@@ -13,7 +13,8 @@ enum StatusFilterMode:String, CaseIterable{
     
     case Bought="Купленное", All="Всё", NeedToBuy="Не купленное"
 }
-var DEVMODE = true
+
+var DEVMODE = false
 struct ContentView: View {
     @State private var items:[ShoppingItem] = DEVMODE ? ShoppingItem.samples: []
     @State private var statusFilterMode:StatusFilterMode = .All
@@ -40,7 +41,8 @@ struct ContentView: View {
              ||
              $0.category.name.localizedCaseInsensitiveContains(searchText)
              ||
-             $0.name.localizedCaseInsensitiveContains(searchText))
+             $0.name.localizedCaseInsensitiveContains(searchText)
+            )
             
         })
     }
