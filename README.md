@@ -13,3 +13,8 @@
 
 ## В СontentView есть переменная DEVMODE, позволяет вернуть ShoppingItem.samples
 ## Работу выполнял на 8 баллов
+## Добавлена сортировка (+1 балл)
+<img width="291" height="576" alt="Снимок экрана 2026-10-09 в 23 09 05" src="https://github.com/user-attachments/assets/85322c84-1959-44b2-aef6-b965e6b2d6e8" />
+<img width="305" height="590" alt="Снимок экрана 2026-10-09 в 23 09 13" src="https://github.com/user-attachments/assets/f9b5cc75-28f8-4a94-b9c2-909ffdf9ad96" />
+
+
