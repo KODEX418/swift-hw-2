@@ -6,18 +6,21 @@
 //
 
 import SwiftUI
-import SwiftData
-
 
 enum StatusFilterMode:String, CaseIterable{
-    
     case Bought="Купленное", All="Всё", NeedToBuy="Не купленное"
 }
 
-var DEVMODE = false
+enum SortMode:String, CaseIterable{
+    case ByName="По имени", ByCategory="По категории", ByAmount="По количеству"
+}
+
+var DEVMODE = true
+
 struct ContentView: View {
     @State private var items:[ShoppingItem] = DEVMODE ? ShoppingItem.samples: []
     @State private var statusFilterMode:StatusFilterMode = .All
+    @State private var sortMode:SortMode = .ByAmount
     @State private var searchText = ""
     @State private var showingAddItem = false
     @State var availableCategories:[Category] = [
@@ -25,11 +28,22 @@ struct ContentView: View {
         Category(name: "Продукты", color: .green),
         Category(name: "Учёба", color: .blue),
     ]
-    
+    @State private var sortModeOrderIsAscending = true
     private var visibleItems:[ShoppingItem] {
-        guard !searchText.isEmpty || statusFilterMode != .All else{return items}
-        
-        return items.filter({
+        let sortingClosure: (ShoppingItem, ShoppingItem) -> Bool = {s1, s2 in
+                let res:Bool
+                if sortMode == .ByName{
+                    res = s1.name.localizedLowercase < s2.name.localizedLowercase
+                }
+                else if sortMode == .ByAmount{
+                    res = s1.quantity > s2.quantity
+                }
+                else{
+                    res = (s1.category.name.localizedLowercase, s1.name.localizedLowercase) < (s2.category.name.localizedLowercase, s2.name.localizedLowercase)
+                }
+                return res
+            }
+        let items = items.filter({
             (
              statusFilterMode == .All
              ||
@@ -45,7 +59,10 @@ struct ContentView: View {
             )
             
         })
+        .sorted(by:sortingClosure)
+        return sortModeOrderIsAscending ? items : Array(items.reversed())
     }
+    
     var body: some View {
         NavigationStack{
             List{
@@ -67,11 +84,26 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItem(placement:.bottomBar){
-                    Picker("", selection: $statusFilterMode){
-                        ForEach(StatusFilterMode.allCases, id: \.self){mode in
+                    
+                        Picker("", selection: $statusFilterMode){
+                            ForEach(StatusFilterMode.allCases, id: \.self){mode in
+                                Text(mode.rawValue).tag(mode)
+                            }
+                        }.pickerStyle(.segmented)
+                    
+                }
+                ToolbarItem(placement:.topBarLeading){
+                    Menu{
+                    Picker("",selection: $sortMode ){
+                        ForEach(SortMode.allCases, id:\.self) {mode in
                             Text(mode.rawValue).tag(mode)
                         }
-                    }.pickerStyle(.segmented)
+                    }
+                        Picker("", selection: $sortModeOrderIsAscending){
+                            Text("По возрастанию").tag(true)
+                            Text("По убыванию").tag(false)
+                        }
+                    } label: {Image(systemName: "arrow.up.arrow.down")}
                 }
             }
             .navigationTitle("Покупки")

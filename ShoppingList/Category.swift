@@ -6,6 +6,7 @@
 //
 import Foundation
 import SwiftUI
+
 extension Color {
     var rgb: (red: Double, green: Double, blue: Double, alpha: Double) {
         let uiColor = UIColor(self)
